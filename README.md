@@ -58,6 +58,28 @@ stringTable.create(users, { headers: ['age', 'name'] });
  */
 ```
 
+### `capitalizeHeaders`
+
+Whether or not to capitalize the table's column headers
+
+*Default: `false`*
+
+#### Example
+
+```javascript
+stringTable.create(users, { capitalizeHeaders: true });
+
+/*
+ * Output:
+ *
+ * | Name   | Gender | Age |
+ * -------------------------
+ * | Dan    | M      |  29 |
+ * | Adam   | M      |  31 |
+ * | Lauren | F      |  33 |
+ */
+```
+
 ### `formatters`
 
 An object mapping column names to formatter functions

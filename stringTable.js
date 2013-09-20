@@ -7,12 +7,13 @@
 
     options = options || {};
 
-    var headers         = options.headers || Object.keys(records[0]),
-        outerBorder     = options.outerBorder || '|',
-        innerBorder     = options.innerBorder || '|',
-        headerSeparator = options.headerSeparator || '-',
-        formatters      = options.formatters || {},
-        rows            = [headers];
+    var headers           = options.headers || Object.keys(records[0]),
+        outerBorder       = options.outerBorder || '|',
+        innerBorder       = options.innerBorder || '|',
+        headerSeparator   = options.headerSeparator || '-',
+        capitalizeHeaders = options.capitalizeHeaders || false,
+        formatters        = options.formatters || {},
+        rows              = [createHeaderRow(headers, capitalizeHeaders)];
 
     for (var i = 0; i < records.length; ++i) {
       rows.push(createRow(records[i], headers, formatters));
@@ -76,6 +77,16 @@
     return row;
   }
 
+  function createHeaderRow(headers, capitalizeHeaders) {
+    var row = Array.prototype.slice.call(headers, 0);
+    if (capitalizeHeaders) {
+      for (var i = 0; i < row.length; ++i) {
+        row[i] = capitalize(row[i]);
+      }
+    }
+    return row;
+  }
+
   function createHeaderSeparator(totalWidth, separator) {
     return repeat(separator, totalWidth);
   }
@@ -90,6 +101,14 @@
 
   function getColumnType(rows, columnIndex) {
     return rows[1] && typeof rows[1][columnIndex];
+  }
+
+  function capitalize(value) {
+    if (!value) {
+      return value;
+    }
+
+    return value.charAt(0).toUpperCase() + value.substring(1);
   }
 
   function formatCell(value, width, type) {
