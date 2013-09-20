@@ -48,6 +48,11 @@
 
   function pad(value, width) {
     var padding = width - String(value).length;
+
+    if (typeof value === 'string') {
+      return value + repeat(' ', padding);
+    }
+
     return repeat(' ', padding) + value;
   }
 
