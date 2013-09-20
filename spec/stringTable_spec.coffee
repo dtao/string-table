@@ -127,3 +127,24 @@ describe 'stringTable', ->
           | arc | bra | CAP |
           """
         )
+
+      it 'allows you to specify a custom formatter for a given type', ->
+        numbers = [
+          { name: 'one', value: 1 },
+          { name: 'two', value: 2 },
+          { name: 'three', value: 3 }
+        ]
+
+        options =
+          typeFormatters:
+            number: (value) -> value.toFixed(2)
+
+        expect(stringTable.create(numbers, options)).toMatchTable(
+          """
+          | name  | value |
+          -----------------
+          | one   | 1.00  |
+          | two   | 2.00  |
+          | three | 3.00  |
+          """
+        )

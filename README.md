@@ -106,6 +106,32 @@ stringTable.create(users, {
  */
 ```
 
+### `typeFormatters`
+
+An object mapping data *types* (`'string'`, `'number'`, `'boolean'`, etc.) to formatter functions (has lower precedence than `formatters` option)
+
+*Default: none*
+
+#### Example
+
+```javascript
+stringTable.create(users, {
+  typeFormatters: {
+    number: function(value) { return value.toFixed(2); }
+  }
+});
+
+/*
+ * Output:
+ *
+ * | name   | gender |    age |
+ * ----------------------------
+ * | Dan    | M      |  29.00 |
+ * | Adam   | M      |  31.00 |
+ * | Lauren | F      |  33.00 |
+ */
+```
+
 ### `outerBorder` and `innerBorder`
 
 The character(s) used to enclose the table and to delimit cells within the table, respectively

@@ -13,10 +13,11 @@
         headerSeparator   = options.headerSeparator || '-',
         capitalizeHeaders = options.capitalizeHeaders || false,
         formatters        = options.formatters || {},
+        typeFormatters    = options.typeFormatters || {},
         rows              = [createHeaderRow(headers, capitalizeHeaders)];
 
     for (var i = 0; i < records.length; ++i) {
-      rows.push(createRow(records[i], headers, formatters));
+      rows.push(createRow(records[i], headers, formatters, typeFormatters));
     }
 
     var totalWidth =
@@ -66,13 +67,19 @@
     return formattedRows.join('\n');
   }
 
-  function createRow(data, headers, formatters) {
+  function createRow(data, headers, formatters, typeFormatters) {
     var row = [];
     for (var i = 0; i < headers.length; ++i) {
-      (function(header) {
-        var formatter = formatters[header] || identity;
-        row.push(formatter(data[header]));
-      }(headers[i]));
+      (function(header, columnIndex) {
+        var value = data[header];
+
+        var formatter = formatters[header] ||
+          typeFormatters[typeof value] ||
+          identity;
+
+        row.push(formatter(value));
+
+      }(headers[i], i));
     }
     return row;
   }
