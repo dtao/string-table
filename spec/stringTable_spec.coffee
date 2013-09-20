@@ -148,3 +148,19 @@ describe 'stringTable', ->
           | three | 3.00  |
           """
         )
+
+      it 'gives precedence to a column-specific formatter before a type formatter', ->
+        options =
+          formatters:
+            b: (value) -> value.toUpperCase(),
+          typeFormatters:
+            string: (value) -> value.substring(0, 2)
+
+        expect(stringTable.create(objects, options)).toMatchTable(
+          """
+          | a  | b   | c  |
+          -----------------
+          | ap | BOW | co |
+          | ar | BRA | ca |
+          """
+        )
