@@ -6,25 +6,31 @@ describe 'stringTable', ->
       objects = [{ foo: 1, bar: 2 }, { foo: 3, bar: 4 }]
 
       expect(stringTable.create(objects)).toEqual(
-        ' foo | bar \n' +
-        '   1 |   2 \n' +
-        '   3 |   4 '
+        """
+        | foo | bar |
+        |   1 |   2 |
+        |   3 |   4 |
+        """
       )
 
     it 'aligns strings to the left, other values to the right', ->
       objects = [{ foo: 'a', bar: 1 }, { foo: 'b', bar: 2 }]
 
       expect(stringTable.create(objects)).toEqual(
-        ' foo | bar \n' +
-        ' a   |   1 \n' +
-        ' b   |   2 '
+        """
+        | foo | bar |
+        | a   |   1 |
+        | b   |   2 |
+        """
       )
 
     it 'aligns headings the same as their values', ->
       objects = [{ a: 'foo', b: 100 }, { a: 'bar', b: 200 }]
 
       expect(stringTable.create(objects)).toEqual(
-        ' a   |   b \n' +
-        ' foo | 100 \n' +
-        ' bar | 200 '
+        """
+        | a   |   b |
+        | foo | 100 |
+        | bar | 200 |
+        """
       )

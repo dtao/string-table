@@ -29,7 +29,7 @@
       for (var j = 0; j < rows[i].length; ++j) {
         currentRow.push(pad(rows[i][j], columnWidths[j], columnTypes[j]));
       }
-      formattedRows.push(' ' + currentRow.join(' | ') + ' ');
+      formattedRows.push('| ' + currentRow.join(' | ') + ' |');
     }
 
     return formattedRows.join('\n');

@@ -17,8 +17,8 @@ console.log(table);
 /*
  * Output:
  *
- *  name   | age 
- *  Dan    |  29 
- *  Adam   |  31 
- *  Lauren |  33 
+ * | name   | age |
+ * | Dan    |  29 |
+ * | Adam   |  31 |
+ * | Lauren |  33 |
 ```
