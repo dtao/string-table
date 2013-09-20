@@ -35,16 +35,30 @@ describe 'stringTable', ->
         """
       )
 
-    it 'allows you to specify which column headings to include', ->
+    describe 'customization', ->
       objects = [
         { a: 'app', b: 'bow', c: 'cow' },
         { a: 'arc', b: 'bra', c: 'cap' }
       ]
 
-      expect(stringTable.create(objects, { headers: ['a', 'c'] })).toEqual(
-        """
-        | a   | c   |
-        | app | cow |
-        | arc | cap |
-        """
-      )
+      it 'allows you to specify which column headings to include', ->
+        expect(stringTable.create(objects, { headers: ['a', 'c'] })).toEqual(
+          """
+          | a   | c   |
+          | app | cow |
+          | arc | cap |
+          """
+        )
+
+      it 'allows you to specify custom outer and inner borders', ->
+        options =
+          outerBorder: '||'
+          innerBorder: '*'
+
+        expect(stringTable.create(objects, options)).toEqual(
+          """
+          || a   * b   * c   ||
+          || app * bow * cow ||
+          || arc * bra * cap ||
+          """
+        )

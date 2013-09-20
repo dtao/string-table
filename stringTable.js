@@ -7,8 +7,10 @@
 
     options = options || {};
 
-    var headers = options.headers || Object.keys(records[0]),
-        rows    = [headers];
+    var headers     = options.headers || Object.keys(records[0]),
+        outerBorder = options.outerBorder || '|',
+        innerBorder = options.innerBorder || '|',
+        rows        = [headers];
 
     for (var i = 0; i < records.length; ++i) {
       rows.push(createRow(records[i], headers));
@@ -31,7 +33,12 @@
       for (var j = 0; j < rows[i].length; ++j) {
         currentRow.push(pad(rows[i][j], columnWidths[j], columnTypes[j]));
       }
-      formattedRows.push('| ' + currentRow.join(' | ') + ' |');
+
+      formattedRows.push([
+        outerBorder,
+        currentRow.join(' ' + innerBorder  + ' '),
+        outerBorder
+      ].join(' '));
     }
 
     return formattedRows.join('\n');
