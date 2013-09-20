@@ -8,6 +8,7 @@ describe 'stringTable', ->
       expect(stringTable.create(objects)).toEqual(
         """
         | foo | bar |
+        -------------
         |   1 |   2 |
         |   3 |   4 |
         """
@@ -19,6 +20,7 @@ describe 'stringTable', ->
       expect(stringTable.create(objects)).toEqual(
         """
         | foo | bar |
+        -------------
         | a   |   1 |
         | b   |   2 |
         """
@@ -30,6 +32,7 @@ describe 'stringTable', ->
       expect(stringTable.create(objects)).toEqual(
         """
         | a   |   b |
+        -------------
         | foo | 100 |
         | bar | 200 |
         """
@@ -45,6 +48,7 @@ describe 'stringTable', ->
         expect(stringTable.create(objects, { headers: ['a', 'c'] })).toEqual(
           """
           | a   | c   |
+          -------------
           | app | cow |
           | arc | cap |
           """
@@ -58,6 +62,7 @@ describe 'stringTable', ->
         expect(stringTable.create(objects, options)).toEqual(
           """
           || a   * b   * c   ||
+          ---------------------
           || app * bow * cow ||
           || arc * bra * cap ||
           """
@@ -71,6 +76,7 @@ describe 'stringTable', ->
         expect(stringTable.create(objects, options)).toEqual(
           """
           | a   | b   | c   |
+          -------------------
           | app | bow | COW |
           | arc | bra | CAP |
           """

@@ -17,9 +17,23 @@
       rows.push(createRow(records[i], headers, formatters));
     }
 
+    var totalWidth =
+      // Width of outer border on each side
+      (outerBorder.length * 2) +
+
+      // There will be an inner border between each cell, hence 1 fewer than total # of cells
+      (innerBorder.length * (headers.length - 1)) +
+
+      // Each cell is padded by an additional space on either side
+      (headers.length * 2);
+
     var columnWidths = [];
     for (var i = 0; i < rows[0].length; ++i) {
-      columnWidths.push(getMaxWidth(rows, i));
+      (function(columnIndex) {
+        var columnWidth = getMaxWidth(rows, columnIndex);
+        columnWidths.push(columnWidth);
+        totalWidth += columnWidth;
+      }(i));
     }
 
     var columnTypes = [];
@@ -40,6 +54,11 @@
         currentRow.join(' ' + innerBorder  + ' '),
         outerBorder
       ].join(' '));
+
+      // Add the header separator right after adding the header
+      if (i === 0) {
+        formattedRows.push(createHeaderSeparator(totalWidth));
+      }
     }
 
     return formattedRows.join('\n');
@@ -54,6 +73,10 @@
       }(headers[i]));
     }
     return row;
+  }
+
+  function createHeaderSeparator(totalWidth) {
+    return repeat('-', totalWidth);
   }
 
   function getMaxWidth(rows, columnIndex) {

@@ -18,6 +18,7 @@ console.log(table);
  * Output:
  *
  * | name   | gender | age |
+ * -------------------------
  * | Dan    | M      |  29 |
  * | Adam   | M      |  31 |
  * | Lauren | F      |  33 |
