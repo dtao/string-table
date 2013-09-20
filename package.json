@@ -1,6 +1,6 @@
 {
   "name": "string-table",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Formats an array of data objects as a textual table",
   "main": "stringTable.js",
   "scripts": {
