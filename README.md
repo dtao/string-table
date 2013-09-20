@@ -21,4 +21,5 @@ console.log(table);
  * | Dan    |  29 |
  * | Adam   |  31 |
  * | Lauren |  33 |
+ */
 ```
