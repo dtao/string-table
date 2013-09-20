@@ -62,3 +62,16 @@ describe 'stringTable', ->
           || arc * bra * cap ||
           """
         )
+
+      it 'allows you to specify a custom formatter for each column', ->
+        options =
+          formatters:
+            c: (value) -> value.toUpperCase()
+
+        expect(stringTable.create(objects, options)).toEqual(
+          """
+          | a   | b   | c   |
+          | app | bow | COW |
+          | arc | bra | CAP |
+          """
+        )

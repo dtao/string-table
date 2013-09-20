@@ -36,5 +36,6 @@ Options
 -------
 
 - `headers` (e.g., `['name', 'age']`): an array of strings indicating which column headers to include
+- `formatters`: an object mapping column names to formatter functions
 - `outerBorder` (default: `'|'`): the character(s) used to enclose the table
 - `innerBorder` (default: `'|'`): the character(s) used to delimit cells within the table
