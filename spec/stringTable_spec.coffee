@@ -19,3 +19,12 @@ describe 'stringTable', ->
         ' a   |   1 \n' +
         ' b   |   2 '
       )
+
+    it 'aligns headings the same as their values', ->
+      objects = [{ a: 'foo', b: 100 }, { a: 'bar', b: 200 }]
+
+      expect(stringTable.create(objects)).toEqual(
+        ' a   |   b \n' +
+        ' foo | 100 \n' +
+        ' bar | 200 '
+      )

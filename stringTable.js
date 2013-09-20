@@ -17,12 +17,17 @@
       columnWidths.push(getMaxWidth(rows, i));
     }
 
+    var columnTypes = [];
+    for (var i = 0; i < rows[0].length; ++i) {
+      columnTypes.push(getColumnType(rows, i));
+    }
+
     var formattedRows = [],
         currentRow;
     for (var i = 0; i < rows.length; ++i) {
       currentRow = [];
       for (var j = 0; j < rows[i].length; ++j) {
-        currentRow.push(pad(rows[i][j], columnWidths[j]));
+        currentRow.push(pad(rows[i][j], columnWidths[j], columnTypes[j]));
       }
       formattedRows.push(' ' + currentRow.join(' | ') + ' ');
     }
@@ -46,10 +51,14 @@
     return maxWidth;
   }
 
-  function pad(value, width) {
+  function getColumnType(rows, columnIndex) {
+    return rows[1] && typeof rows[1][columnIndex];
+  }
+
+  function pad(value, width, type) {
     var padding = width - String(value).length;
 
-    if (typeof value === 'string') {
+    if (type === 'string') {
       return value + repeat(' ', padding);
     }
 
