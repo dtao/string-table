@@ -34,3 +34,17 @@ describe 'stringTable', ->
         | bar | 200 |
         """
       )
+
+    it 'allows you to specify which column headings to include', ->
+      objects = [
+        { a: 'app', b: 'bow', c: 'cow' },
+        { a: 'arc', b: 'bra', c: 'cap' }
+      ]
+
+      expect(stringTable.create(objects, { headers: ['a', 'c'] })).toEqual(
+        """
+        | a   | c   |
+        | app | cow |
+        | arc | cap |
+        """
+      )

@@ -1,11 +1,13 @@
 (function(module) {
 
-  function createTable(records) {
+  function createTable(records, options) {
     if (!records || records.length === 0) {
       return '';
     }
 
-    var headers = Object.keys(records[0]),
+    options = options || {};
+
+    var headers = options.headers || Object.keys(records[0]),
         rows    = [headers];
 
     for (var i = 0; i < records.length; ++i) {

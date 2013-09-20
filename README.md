@@ -5,9 +5,9 @@ A groundbreaking, innovating JavaScript library to do something that's literally
 
 ```javascript
 var objects = [
-  { name: 'Dan', age: 29 },
-  { name: 'Adam', age: 31 },
-  { name: 'Lauren', age: 33 }
+  { name: 'Dan', gender: 'M', age: 29 },
+  { name: 'Adam', gender: 'M', age: 31 },
+  { name: 'Lauren', gender: 'F', age: 33 }
 ];
 
 var table = stringTable.create(objects);
@@ -17,9 +17,22 @@ console.log(table);
 /*
  * Output:
  *
- * | name   | age |
- * | Dan    |  29 |
- * | Adam   |  31 |
- * | Lauren |  33 |
+ * | name   | gender | age |
+ * | Dan    | M      |  29 |
+ * | Adam   | M      |  31 |
+ * | Lauren | F      |  33 |
  */
 ```
+
+You can also specify options to customize how the table is formatted:
+
+```javascript
+var table = stringTable.create(objects, options);
+```
+
+The available options are summarized below.
+
+Options
+-------
+
+- `headers` (e.g., `['name', 'age']`): an array of strings indicating which column headers to include
