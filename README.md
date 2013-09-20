@@ -1,7 +1,7 @@
 stringTable.js
 ==============
 
-A groundbreaking, innovating JavaScript library to do something that's literally never been attempted before: formatting an array of data objects as a textual table.
+A groundbreaking, innovative JavaScript library to do something that's literally never been attempted before: formatting an array of data objects as a textual table.
 
 ```javascript
 var users = [
@@ -106,5 +106,27 @@ stringTable.create(users, {
  * % DAN    $ M      $  29 %
  * % ADAM   $ M      $  31 %
  * % LAUREN $ F      $  33 %
+ */
+```
+
+### `headerSeparator`
+
+The character used to separate the header row from the table body
+
+*Default: `'-'`*
+
+#### Example
+
+```javascript
+stringTable.create(users, { headerSeparator: '*' });
+
+/*
+ * Output:
+ *
+ * | name   | gender | age |
+ * *************************
+ * | Dan    | M      |  29 |
+ * | Adam   | M      |  31 |
+ * | Lauren | F      |  33 |
  */
 ```

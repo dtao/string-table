@@ -7,11 +7,12 @@
 
     options = options || {};
 
-    var headers     = options.headers || Object.keys(records[0]),
-        outerBorder = options.outerBorder || '|',
-        innerBorder = options.innerBorder || '|',
-        formatters  = options.formatters || {}
-        rows        = [headers];
+    var headers         = options.headers || Object.keys(records[0]),
+        outerBorder     = options.outerBorder || '|',
+        innerBorder     = options.innerBorder || '|',
+        headerSeparator = options.headerSeparator || '-',
+        formatters      = options.formatters || {},
+        rows            = [headers];
 
     for (var i = 0; i < records.length; ++i) {
       rows.push(createRow(records[i], headers, formatters));
@@ -57,7 +58,7 @@
 
       // Add the header separator right after adding the header
       if (i === 0) {
-        formattedRows.push(createHeaderSeparator(totalWidth));
+        formattedRows.push(createHeaderSeparator(totalWidth, headerSeparator));
       }
     }
 
@@ -75,8 +76,8 @@
     return row;
   }
 
-  function createHeaderSeparator(totalWidth) {
-    return repeat('-', totalWidth);
+  function createHeaderSeparator(totalWidth, separator) {
+    return repeat(separator, totalWidth);
   }
 
   function getMaxWidth(rows, columnIndex) {

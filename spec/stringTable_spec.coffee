@@ -68,6 +68,16 @@ describe 'stringTable', ->
           """
         )
 
+      it 'allows you to specify a custom header separator', ->
+        expect(stringTable.create(objects, { headerSeparator: 'x' })).toEqual(
+          """
+          | a   | b   | c   |
+          xxxxxxxxxxxxxxxxxxx
+          | app | bow | cow |
+          | arc | bra | cap |
+          """
+        )
+
       it 'allows you to specify a custom formatter for each column', ->
         options =
           formatters:
