@@ -52,9 +52,9 @@ stringTable.create(users, { headers: ['age', 'name'] });
  *
  * | age | name   |
  * ----------------
- * | 29  | Dan    |
- * | 31  | Adam   |
- * | 33  | Lauren |
+ * |  29 | Dan    |
+ * |  31 | Adam   |
+ * |  33 | Lauren |
  */
 ```
 
@@ -86,7 +86,7 @@ stringTable.create(users, {
 
 ### `outerBorder` and `innerBorder`
 
-The character(s) used to enclose the table
+The character(s) used to enclose the table and to delimit cells within the table, respectively
 
 *Defaults: `'|'` for both*
 
