@@ -15,5 +15,8 @@
   "readmeFilename": "README.md",
   "bugs": {
     "url": "https://github.com/dtao/stringTable.js/issues"
+  },
+  "devDependencies": {
+    "colors": ">= 0.6.2"
   }
 }

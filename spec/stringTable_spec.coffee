@@ -164,3 +164,27 @@ describe 'stringTable', ->
           | ar | BRA | ca |
           """
         )
+
+      it 'can adjust column widths for colored output', ->
+        require('colors')
+
+        options =
+          adjustForColoredOutput: true
+
+        palette = [
+          { name: 'success', color: 'green'.green },
+          { name: 'info', color: 'blue'.blue },
+          { name: 'warning', color: 'yellow'.yellow },
+          { name: 'danger', color: 'red'.red }
+        ]
+
+        expect(stringTable.create(palette, options)).toMatchTable(
+          """
+          | name    | color  |
+          --------------------
+          | success | #{'green'.green}  |
+          | info    | #{'blue'.blue}   |
+          | warning | #{'yellow'.yellow} |
+          | danger  | #{'red'.red}    |
+          """
+        )
