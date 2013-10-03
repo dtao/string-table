@@ -1,7 +1,7 @@
 {
   "name": "string-table",
   "main": "stringTable.js",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/dtao/stringTable.js",
   "authors": [
     "Dan Tao <daniel.tao@gmail.com>"
