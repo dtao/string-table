@@ -28,7 +28,7 @@ describe 'stringTable', ->
       toMatchTable: (expectedTable) ->
         this.message = ->
           """
-          Expected these tables to match:
+          Table did not match expectations:
 
           #{juxtapose(this.actual, expectedTable, 5)}
           """
