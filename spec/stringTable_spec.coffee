@@ -3,8 +3,8 @@ stringTable = require('../stringTable.js')
 describe 'stringTable', ->
   juxtapose = (left, right, indentation) ->
     [leftRows, rightRows] = [left.split('\n'), right.split('\n')]
-    output = for leftRow, i in leftRows
-      indent(indentation) + "#{leftRow}   #{rightRows[i]}"
+    output = for i in [0..Math.max(leftRows.length, rightRows.length)] 
+      indent(indentation) + "#{leftRows[i] || ''}   #{rightRows[i] || ''}"
     output.join('\n')
 
   indent = (indentation) ->
@@ -59,6 +59,43 @@ describe 'stringTable', ->
         """
       )
 
+    it 'resizes rows to fit multiline strings', ->
+      books = [
+        {
+          title: 'The Cat in the Hat',
+          opening:
+            """
+            The sun did not shine.
+            It was too wet to play.
+            So we sat in the house
+            All that cold, cold, wet day.
+            """
+        },
+        {
+          title: 'Green Eggs and Ham',
+          opening:
+            """
+            I am Sam.
+            Sam I am.
+            Do you like green eggs and ham?
+            """
+        }
+      ]
+
+      expect(stringTable.create(books)).toMatchTable(
+        """
+        | title              | opening                         |
+        --------------------------------------------------------
+        | The Cat in the Hat | The did not shine.              |
+        |                    | It was too wet to play.         |
+        |                    | So we sat in the house          |
+        |                    | All that cold, cold, wet day.   |
+        | Green Eggs and Ham | I am Sam.                       |
+        |                    | Sam I am.                       |
+        |                    | Do you like green eggs and ham? |
+        """
+      )
+
     describe 'customization', ->
       objects = [
         { a: 'app', b: 'bow', c: 'cow' },
@@ -101,6 +138,17 @@ describe 'stringTable', ->
           ---------------------
           || app * bow * cow ||
           || arc * bra * cap ||
+          """
+        )
+
+      it 'allows you to specify a row separator', ->
+        expect(stringTable.create(objects, { rowSeparator: ':' })).toMatchTable(
+          """
+          | a   | b   | c   |
+          -------------------
+          | app | bow | cow |
+          :::::::::::::::::::
+          | arc | bra | cap |
           """
         )
 

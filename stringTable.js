@@ -11,6 +11,7 @@
         outerBorder       = options.outerBorder || '|',
         innerBorder       = options.innerBorder || '|',
         headerSeparator   = options.headerSeparator || '-',
+        rowSeparator      = options.rowSeparator,
         capitalizeHeaders = options.capitalizeHeaders || false,
         formatters        = options.formatters || {},
         typeFormatters    = options.typeFormatters || {},
@@ -45,27 +46,39 @@
       columnTypes.push(getColumnType(rows, i));
     }
 
-    var formattedRows = [],
-        currentRow;
+    var formattedLines = [];
     for (var i = 0; i < rows.length; ++i) {
-      currentRow = [];
-      for (var j = 0; j < rows[i].length; ++j) {
-        currentRow.push(formatCell(rows[i][j], columnWidths[j], columnTypes[j], coloredOutput));
-      }
+      (function(row) {
+        // Determine the height of each row
+        var rowHeight = getMaxHeight(row),
+            currentLine;
 
-      formattedRows.push([
-        outerBorder,
-        currentRow.join(' ' + innerBorder  + ' '),
-        outerBorder
-      ].join(' '));
+        // Print the row one line at a time (this requires revisiting each cell N times for N lines)
+        for (var line = 0; line < rowHeight; ++line) {
+          currentLine = [];
 
-      // Add the header separator right after adding the header
-      if (i === 0) {
-        formattedRows.push(createHeaderSeparator(totalWidth, headerSeparator));
-      }
+          for (var j = 0; j < row.length; ++j) {
+            (function(cell, width, type) {
+              var cellLines = String(cell).split('\n');
+              currentLine.push(formatCell(cellLines[line] || '', width, type, coloredOutput));
+            }(row[j], columnWidths[j], columnTypes[j]));
+          }
+
+          formattedLines.push(outerBorder + ' ' + currentLine.join(' ' + innerBorder + ' ') + ' ' + outerBorder);
+        }
+
+        if (rowSeparator && i > 0 && i < rows.length - 1) {
+          formattedLines.push(createRowSeparator(totalWidth, rowSeparator));
+        }
+
+        // Add the header separator right after adding the header
+        if (i === 0) {
+          formattedLines.push(createRowSeparator(totalWidth, headerSeparator));
+        }
+      }(rows[i]));
     }
 
-    return formattedRows.join('\n');
+    return formattedLines.join('\n');
   }
 
   function createRow(data, headers, formatters, typeFormatters) {
@@ -95,16 +108,28 @@
     return row;
   }
 
-  function createHeaderSeparator(totalWidth, separator) {
+  function createRowSeparator(totalWidth, separator) {
     return repeat(separator, totalWidth);
   }
 
   function getMaxWidth(rows, columnIndex, coloredOutput) {
-    var maxWidth = 0;
+    var maxWidth = 0,
+        lines;
     for (var i = 0; i < rows.length; ++i) {
-      maxWidth = Math.max(maxWidth, strLength(rows[i][columnIndex], coloredOutput));
+      lines = String(rows[i][columnIndex]).split('\n');
+      for (var j = 0; j < lines.length; ++j) {
+        maxWidth = Math.max(maxWidth, strLength(lines[j], coloredOutput));
+      }
     }
     return maxWidth;
+  }
+
+  function getMaxHeight(row) {
+    var maxHeight = 1;
+    for (var i = 0; i < row.length; ++i) {
+      maxHeight = Math.max(maxHeight, lineCount(String(row[i])));
+    }
+    return maxHeight;
   }
 
   function getColumnType(rows, columnIndex) {
@@ -135,6 +160,28 @@
       str = str.replace(/\u001b\[\d{1,2}m?/g, '');
     }
     return str.length;
+  }
+
+  /**
+   * @examples
+   * countOccurrences('foo', 'f') => 1
+   * countOccurrences('foo', 'o') => 2
+   * countOccurrences('bar', 'z') => 0
+   */
+  function countOccurrences(str, char) {
+    var count = 0,
+        index = str.indexOf(char);
+
+    while (index !== -1) {
+      ++count;
+      index = str.indexOf(char, index + char.length);
+    }
+
+    return count;
+  }
+
+  function lineCount(str) {
+    return countOccurrences(str, '\n') + 1;
   }
 
   function repeat(value, count) {
