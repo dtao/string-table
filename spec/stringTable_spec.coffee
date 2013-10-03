@@ -166,6 +166,17 @@ describe 'stringTable', ->
           """
         )
 
+      it 'allows the row separator to be multiple characters', ->
+        expect(stringTable.create(objects, { rowSeparator: '+-*/' })).toMatchTable(
+          """
+          | a   | b   | c   |
+          -------------------
+          | app | bow | cow |
+          +-*/+-*/+-*/+-*/+-*
+          | arc | bra | cap |
+          """
+        )
+
       it 'allows you to specify a custom header separator', ->
         expect(stringTable.create(objects, { headerSeparator: 'x' })).toMatchTable(
           """

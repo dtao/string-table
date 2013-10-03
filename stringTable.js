@@ -109,7 +109,7 @@
   }
 
   function createRowSeparator(totalWidth, separator) {
-    return repeat(separator, totalWidth);
+    return repeatToLength(separator, totalWidth);
   }
 
   function getMaxWidth(rows, columnIndex, coloredOutput) {
@@ -204,11 +204,32 @@
 
   /**
    * @examples
-   * repeat('a', 3)  => 'aaa'
-   * repeat('a', 0)  => ''
+   * repeat('a', 3)   => 'aaa'
+   * repeat('abc', 3) => 'abcabcabc'
+   * repeat('a', 0)   => ''
    */
   function repeat(value, count) {
     return new Array(count + 1).join(value);
+  }
+
+  /**
+   * @examples
+   * repeatToLength('a', 3)   => 'aaa'
+   * repeatToLength('foo', 7) => 'foofoof'
+   */
+  function repeatToLength(value, length) {
+    if (length < value.length) {
+      return value.substring(0, length);
+    }
+
+    var str = value;
+    while ((str.length * 2) < length) {
+      str += str;
+    }
+
+    str += str.substring(0, length - str.length);
+
+    return str;
   }
 
   function identity(value) {
@@ -222,7 +243,8 @@
     utils: {
       padLeft: padLeft,
       padRight: padRight,
-      repeat: repeat
+      repeat: repeat,
+      repeatToLength: repeatToLength
     }
   };
 
