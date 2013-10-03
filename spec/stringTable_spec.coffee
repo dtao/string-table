@@ -86,7 +86,7 @@ describe 'stringTable', ->
         """
         | title              | opening                         |
         --------------------------------------------------------
-        | The Cat in the Hat | The did not shine.              |
+        | The Cat in the Hat | The sun did not shine.          |
         |                    | It was too wet to play.         |
         |                    | So we sat in the house          |
         |                    | All that cold, cold, wet day.   |
