@@ -154,6 +154,28 @@ stringTable.create(users, {
  * % DAN    $ M      $  29 %
  * % ADAM   $ M      $  31 %
  * % LAUREN $ F      $  33 %
+
+### `rowSeparator`
+
+The character used to separate rows in the table
+
+*Default: `undefined`*
+
+#### Example
+
+```javascript
+stringTable.create(users, { rowSeparator: '~' });
+
+/*
+ * Output:
+ *
+ * | name   | gender | age |
+ * -------------------------
+ * | Dan    | M      |  29 |
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~
+ * | Adam   | M      |  31 |
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~
+ * | Lauren | F      |  33 |
  */
 ```
 

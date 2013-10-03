@@ -95,7 +95,7 @@ describe 'stringTable', ->
         }
       ]
 
-      expect(stringTable.create(books)).toMatchTable(
+      expect(stringTable.create(books, { rowSeparator: '-' })).toMatchTable(
         """
         | title              | opening                         |
         --------------------------------------------------------
@@ -103,6 +103,7 @@ describe 'stringTable', ->
         |                    | It was too wet to play.         |
         |                    | So we sat in the house          |
         |                    | All that cold, cold, wet day.   |
+        --------------------------------------------------------
         | Green Eggs and Ham | I am Sam.                       |
         |                    | Sam I am.                       |
         |                    | Do you like green eggs and ham? |
