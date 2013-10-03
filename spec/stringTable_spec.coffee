@@ -1,3 +1,5 @@
+require('colors')
+jsDiff = require('diff')
 stringTable = require('../stringTable.js')
 
 describe 'stringTable', ->
@@ -6,11 +8,15 @@ describe 'stringTable', ->
     [leftWidth, rightWidth] = [leftRows[0].length, rightRows[0].length]
 
     output = for i in [0...Math.max(leftRows.length, rightRows.length)]
-      leftValue = leftRows[i] || ''
-
-      indent(indentation) +
-      stringTable.utils.padLeft(leftValue, leftWidth - leftValue.length) + '   ' +
-      rightRows[i] || ''
+      changes = jsDiff.diffWords(leftRows[i] || '', rightRows[i] || '')
+      parts = for change in changes
+        if change.added
+          change.value.green
+        else if change.removed
+          change.value.red
+        else
+          change.value
+      indent(indentation) + parts.join('')
 
     output.join('\n')
 
