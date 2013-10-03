@@ -15,7 +15,6 @@
         capitalizeHeaders = options.capitalizeHeaders || false,
         formatters        = options.formatters || {},
         typeFormatters    = options.typeFormatters || {},
-        coloredOutput     = options.adjustForColoredOutput || false,
         rows              = [createHeaderRow(headers, capitalizeHeaders)];
 
     for (var i = 0; i < records.length; ++i) {
@@ -24,10 +23,10 @@
 
     var totalWidth =
       // Width of outer border on each side
-      (strLength(outerBorder, coloredOutput) * 2) +
+      (strLength(outerBorder) * 2) +
 
       // There will be an inner border between each cell, hence 1 fewer than total # of cells
-      (strLength(innerBorder, coloredOutput) * (headers.length - 1)) +
+      (strLength(innerBorder) * (headers.length - 1)) +
 
       // Each cell is padded by an additional space on either side
       (headers.length * 2);
@@ -35,7 +34,7 @@
     var columnWidths = [];
     for (var i = 0; i < rows[0].length; ++i) {
       (function(columnIndex) {
-        var columnWidth = getMaxWidth(rows, columnIndex, coloredOutput);
+        var columnWidth = getMaxWidth(rows, columnIndex);
         columnWidths.push(columnWidth);
         totalWidth += columnWidth;
       }(i));
@@ -67,7 +66,7 @@
           for (var j = 0; j < row.length; ++j) {
             (function(cell, width, type) {
               var lines = cellLines[j];
-              currentLine.push(formatCell(lines[line] || '', width, type, coloredOutput));
+              currentLine.push(formatCell(lines[line] || '', width, type));
             }(row[j], columnWidths[j], columnTypes[j]));
           }
 
@@ -119,13 +118,13 @@
     return repeatToLength(separator, totalWidth);
   }
 
-  function getMaxWidth(rows, columnIndex, coloredOutput) {
+  function getMaxWidth(rows, columnIndex) {
     var maxWidth = 0,
         lines;
     for (var i = 0; i < rows.length; ++i) {
       lines = String(rows[i][columnIndex]).split('\n');
       for (var j = 0; j < lines.length; ++j) {
-        maxWidth = Math.max(maxWidth, strLength(lines[j], coloredOutput));
+        maxWidth = Math.max(maxWidth, strLength(lines[j]));
       }
     }
     return maxWidth;
@@ -151,8 +150,8 @@
     return value.charAt(0).toUpperCase() + value.substring(1);
   }
 
-  function formatCell(value, width, type, coloredOutput) {
-    var padding = width - strLength(value, coloredOutput);
+  function formatCell(value, width, type) {
+    var padding = width - strLength(value);
 
     if (type === 'string') {
       return padLeft(value, padding);
@@ -161,12 +160,8 @@
     return padRight(value, padding);
   }
 
-  function strLength(value, coloredOutput) {
-    var str = String(value);
-    if (coloredOutput) {
-      str = str.replace(/\u001b\[\d{1,2}m?/g, '');
-    }
-    return str.length;
+  function strLength(value) {
+    return String(value).replace(/\u001b\[\d{1,2}m?/g, '').length;
   }
 
   /**
