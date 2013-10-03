@@ -151,9 +151,11 @@ stringTable.create(users, {
  *
  * % name   $ gender $ age %
  * -------------------------
- * % DAN    $ M      $  29 %
- * % ADAM   $ M      $  31 %
- * % LAUREN $ F      $  33 %
+ * % Dan    $ M      $  29 %
+ * % Adam   $ M      $  31 %
+ * % Lauren $ F      $  33 %
+ */
+```
 
 ### `rowSeparator`
 
