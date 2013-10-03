@@ -2,9 +2,16 @@ stringTable = require('../stringTable.js')
 
 describe 'stringTable', ->
   juxtapose = (left, right, indentation) ->
-    [leftRows, rightRows] = [left.split('\n'), right.split('\n')]
-    output = for i in [0..Math.max(leftRows.length, rightRows.length)] 
-      indent(indentation) + "#{leftRows[i] || ''}   #{rightRows[i] || ''}"
+    [leftRows, rightRows]   = [left.split('\n'), right.split('\n')]
+    [leftWidth, rightWidth] = [leftRows[0].length, rightRows[0].length]
+
+    output = for i in [0...Math.max(leftRows.length, rightRows.length)]
+      leftValue = leftRows[i] || ''
+
+      indent(indentation) +
+      stringTable.utils.padLeft(leftValue, leftWidth - leftValue.length) + '   ' +
+      rightRows[i] || ''
+
     output.join('\n')
 
   indent = (indentation) ->

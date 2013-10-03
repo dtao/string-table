@@ -148,10 +148,10 @@
     var padding = width - strLength(value, coloredOutput);
 
     if (type === 'string') {
-      return value + repeat(' ', padding);
+      return padLeft(value, padding);
     }
 
-    return repeat(' ', padding) + value;
+    return padRight(value, padding);
   }
 
   function strLength(value, coloredOutput) {
@@ -184,6 +184,29 @@
     return countOccurrences(str, '\n') + 1;
   }
 
+  /**
+   * @examples
+   * padLeft('foo', 2) => 'foo  '
+   * padLeft('foo', 0) => 'foo'
+   */
+  function padLeft(value, padding) {
+    return value + repeat(' ', padding);
+  }
+
+  /**
+   * @examples
+   * padRight('foo', 2) => '  foo'
+   * padRight('foo', 0) => 'foo'
+   */
+  function padRight(value, padding) {
+    return repeat(' ', padding) + value;
+  }
+
+  /**
+   * @examples
+   * repeat('a', 3)  => 'aaa'
+   * repeat('a', 0)  => ''
+   */
   function repeat(value, count) {
     return new Array(count + 1).join(value);
   }
@@ -193,7 +216,14 @@
   }
 
   var stringTable = {
-    create: createTable
+    create: createTable,
+
+    // These are useful for testing; why not expose them?
+    utils: {
+      padLeft: padLeft,
+      padRight: padRight,
+      repeat: repeat
+    }
   };
 
   module.exports = module.stringTable = stringTable;
