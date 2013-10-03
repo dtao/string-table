@@ -53,14 +53,21 @@
         var rowHeight = getMaxHeight(row),
             currentLine;
 
+        // Get the lines of each cell once, so we don't have to keep splitting
+        // over and over in the loop after this one.
+        var cellLines = [];
+        for (var col = 0; col < row.length; ++col) {
+          cellLines.push(String(row[col]).split('\n'));
+        }
+
         // Print the row one line at a time (this requires revisiting each cell N times for N lines)
         for (var line = 0; line < rowHeight; ++line) {
           currentLine = [];
 
           for (var j = 0; j < row.length; ++j) {
             (function(cell, width, type) {
-              var cellLines = String(cell).split('\n');
-              currentLine.push(formatCell(cellLines[line] || '', width, type, coloredOutput));
+              var lines = cellLines[j];
+              currentLine.push(formatCell(lines[line] || '', width, type, coloredOutput));
             }(row[j], columnWidths[j], columnTypes[j]));
           }
 
