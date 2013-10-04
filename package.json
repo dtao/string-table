@@ -16,8 +16,7 @@
   "bugs": {
     "url": "https://github.com/dtao/stringTable.js/issues"
   },
-  "devDependencies": {
-    "colors": ">= 0.6.2",
-    "diff": ">= 1.0.7"
+  "dependencies": {
+    "colors": ">= 0.6.2"
   }
 }
