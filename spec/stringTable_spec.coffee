@@ -258,6 +258,53 @@ describe 'stringTable', ->
             """
           )
 
+        it 'applies alignment to multi-line values as well', ->
+          books = [
+            {
+              title: 'The Cat in the Hat',
+              opening:
+                """
+                The sun did not shine.
+                It was too wet to play.
+                So we sat in the house
+                All that cold, cold, wet day.
+                """
+            },
+            {
+              title: 'Green Eggs and Ham',
+              opening:
+                """
+                I am Sam.
+                Sam I am.
+                Do you like green eggs and ham?
+                """
+            }
+          ]
+
+          options =
+            formatters:
+              opening: (value) ->
+                value: value
+                format:
+                  alignment: 'right'
+            headerSeparator: '='
+            rowSeparator: '-'
+
+          expect(stringTable.create(books, options)).toMatchTable(
+            """
+            | title              | opening                         |
+            ========================================================
+            | The Cat in the Hat |          The sun did not shine. |
+            |                    |         It was too wet to play. |
+            |                    |          So we sat in the house |
+            |                    |   All that cold, cold, wet day. |
+            --------------------------------------------------------
+            | Green Eggs and Ham |                       I am Sam. |
+            |                    |                       Sam I am. |
+            |                    | Do you like green eggs and ham? |
+            """
+          )
+
       it 'allows you to specify a custom formatter for a given type', ->
         numbers = [
           { name: 'one', value: 1 },
