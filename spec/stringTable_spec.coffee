@@ -1,5 +1,4 @@
 require('colors')
-jsDiff = require('diff')
 stringTable = require('../stringTable.js')
 
 describe 'stringTable', ->
