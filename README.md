@@ -3,6 +3,14 @@ stringTable.js
 
 A groundbreaking, innovative JavaScript library to do something that's literally never been attempted before: formatting an array of data objects as a textual table.
 
+Installation
+------------
+
+    npm install string-table
+
+Example
+-------
+
 ```javascript
 var users = [
   { name: 'Dan', gender: 'M', age: 29 },
@@ -10,12 +18,10 @@ var users = [
   { name: 'Lauren', gender: 'F', age: 33 }
 ];
 
-var table = stringTable.create(users);
-
-console.log(table);
+stringTable.create(users);
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender | age |
  * -------------------------
@@ -23,6 +29,50 @@ console.log(table);
  * | Adam   | M      |  31 |
  * | Lauren | F      |  33 |
  */
+```
+
+It works with multi-line strings, too!
+
+```coffeescript
+# This example is in CoffeeScript for readability.
+
+books = [
+  {
+    title: 'The Cat in the Hat',
+    opening:
+      """
+      The sun did not shine.
+      It was too wet to play.
+      So we sat in the house
+      All that cold, cold, wet day.
+      """
+  },
+  {
+    title: 'Green Eggs and Ham',
+    opening:
+      """
+      I am Sam.
+      Sam I am.
+      Do you like green eggs and ham?
+      """
+  }
+]
+
+stringTable.create(books)
+
+#
+# Result:
+#
+# | title              | opening                         |
+# --------------------------------------------------------
+# | The Cat in the Hat | The sun did not shine.          |
+# |                    | It was too wet to play.         |
+# |                    | So we sat in the house          |
+# |                    | All that cold, cold, wet day.   |
+# | Green Eggs and Ham | I am Sam.                       |
+# |                    | Sam I am.                       |
+# |                    | Do you like green eggs and ham? |
+#
 ```
 
 You can also specify options to customize how the table is formatted:
@@ -48,7 +98,7 @@ An array of strings indicating which column headers to include (and in what orde
 stringTable.create(users, { headers: ['age', 'name'] });
 
 /*
- * Output:
+ * Result:
  *
  * | age | name   |
  * ----------------
@@ -70,7 +120,7 @@ Whether or not to capitalize the table's column headers
 stringTable.create(users, { capitalizeHeaders: true });
 
 /*
- * Output:
+ * Result:
  *
  * | Name   | Gender | Age |
  * -------------------------
@@ -96,7 +146,7 @@ stringTable.create(users, {
 });
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender | age |
  * -------------------------
@@ -124,7 +174,7 @@ stringTable.create(users, {
 });
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender |    age |
  * ----------------------------
@@ -152,7 +202,7 @@ stringTable.create(users, {
 });
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender |    age |
  * ----------------------------
@@ -177,7 +227,7 @@ stringTable.create(users, {
 });
 
 /*
- * Output:
+ * Result:
  *
  * % name   $ gender $ age %
  * -------------------------
@@ -199,7 +249,7 @@ The character used to separate rows in the table
 stringTable.create(users, { rowSeparator: '~' });
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender | age |
  * -------------------------
@@ -223,7 +273,7 @@ The character used to separate the header row from the table body
 stringTable.create(users, { headerSeparator: '*' });
 
 /*
- * Output:
+ * Result:
  *
  * | name   | gender | age |
  * *************************
