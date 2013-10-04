@@ -1,6 +1,8 @@
 stringTable.js
 ==============
 
+[![Build Status](https://travis-ci.org/dtao/stringTable.js.png)](https://travis-ci.org/dtao/stringTable.js)
+
 A groundbreaking, innovative JavaScript library to do something that's literally never been attempted before: formatting an array of data objects as a textual table.
 
 Installation
