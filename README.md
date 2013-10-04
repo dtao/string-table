@@ -3,7 +3,7 @@ stringTable.js
 
 [![Build Status](https://travis-ci.org/dtao/stringTable.js.png)](https://travis-ci.org/dtao/stringTable.js)
 
-A groundbreaking, innovative JavaScript library to do something that's [literally](https://github.com/JanGorman/node-table) [never](https://github.com/eldargab/easy-table) [been](https://npmjs.org/package/text-table) [attempted](https://github.com/sorensen/ascii-table) before: formatting an array of data objects as a textual table.
+A groundbreaking, innovative JavaScript library to do something that's [literally](https://github.com/JanGorman/node-table) [never](https://github.com/eldargab/easy-table) [been](https://github.com/substack/text-table) [attempted](https://github.com/sorensen/ascii-table) before: formatting an array of data objects as a textual table.
 
 Installation
 ------------
