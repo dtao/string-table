@@ -4,31 +4,29 @@ stringTable = require('../stringTable.js')
 
 describe 'stringTable', ->
   juxtapose = (left, right, indentation) ->
-    [leftRows, rightRows]   = [left.split('\n'), right.split('\n')]
-    [leftWidth, rightWidth] = [leftRows[0].length, rightRows[0].length]
+    [leftRows, rightRows] = [left.split('\n'), right.split('\n')]
+    leftWidth             = leftRows[0].length
 
     output = for i in [0...Math.max(leftRows.length, rightRows.length)]
-      changes = jsDiff.diffWords(leftRows[i] || '', rightRows[i] || '')
-      parts = for change in changes
-        if change.added
-          change.value.green
-        else if change.removed
-          change.value.red
-        else
-          change.value
-      indent(indentation) + parts.join('')
+      [
+        pad(leftRows[i] || '', leftWidth),
+        rightRows[i] || ''
+      ].join(indent(indentation))
 
     output.join('\n')
 
   indent = (indentation) ->
     new Array(indentation + 1).join(' ')
 
+  pad = (str, width) ->
+    return str + indent(width - str.length)
+
   beforeEach ->
     this.addMatchers
       toMatchTable: (expectedTable) ->
         this.message = ->
           """
-          Table did not match expectations:
+          Expected these tables to match:
 
           #{juxtapose(this.actual, expectedTable, 5)}
           """
