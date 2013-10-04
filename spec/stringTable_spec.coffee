@@ -201,6 +201,65 @@ describe 'stringTable', ->
           """
         )
 
+      describe 'when receiving a { value, format } object as formatter output', ->
+        users = [
+          { name: 'Dan', gender: 'M', age: 29 },
+          { name: 'Adam', gender: 'M', age: 31 },
+          { name: 'Lauren', gender: 'F', age: 33 }
+        ]
+
+        it 'applies no formatting if none is given', ->
+          options =
+            formatters:
+              gender: (value) ->
+                value: value
+
+          expect(stringTable.create(users, options)).toMatchTable(
+            """
+            | name   | gender | age |
+            -------------------------
+            | Dan    | M      |  29 |
+            | Adam   | M      |  31 |
+            | Lauren | F      |  33 |
+            """
+          )
+
+        it 'applies colors, if specified', ->
+          options =
+            formatters:
+              gender: (value) ->
+                value: value
+                format:
+                  color: if value == 'M' then 'cyan' else 'magenta'
+
+          expect(stringTable.create(users, options)).toMatchTable(
+            """
+            | name   | gender | age |
+            -------------------------
+            | Dan    | #{'M'.cyan}      |  29 |
+            | Adam   | #{'M'.cyan}      |  31 |
+            | Lauren | #{'F'.magenta}      |  33 |
+            """
+          )
+
+        it 'applies alignment, if specified', ->
+          options =
+            formatters:
+              gender: (value) ->
+                value: value
+                format:
+                  alignment: 'right'
+
+          expect(stringTable.create(users, options)).toMatchTable(
+            """
+            | name   | gender | age |
+            -------------------------
+            | Dan    |      M |  29 |
+            | Adam   |      M |  31 |
+            | Lauren |      F |  33 |
+            """
+          )
+
       it 'allows you to specify a custom formatter for a given type', ->
         numbers = [
           { name: 'one', value: 1 },

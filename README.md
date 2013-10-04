@@ -106,6 +106,36 @@ stringTable.create(users, {
  */
 ```
 
+A formatter may also return an object with the properties `{ value, format }`, where `format` in turn can have the properties `{ color, alignment }`.
+
+```javascript
+stringTable.create(users, {
+  formatters: {
+    gender: function(value) {
+      return {
+        value: value,
+        format: {
+          color: value === 'M' ? 'cyan' : 'magenta',
+          alignment: 'right'
+        }
+      };
+    }
+  }
+});
+
+/*
+ * Output:
+ *
+ * | name   | gender |    age |
+ * ----------------------------
+ * | Dan    |      M |  29.00 |
+ * | Adam   |      M |  31.00 |
+ * | Lauren |      F |  33.00 |
+ *
+ * (Imagine the Ms are cyan and the F is magenta above.)
+ */
+```
+
 ### `typeFormatters`
 
 An object mapping data *types* (`'string'`, `'number'`, `'boolean'`, etc.) to formatter functions (has lower precedence than `formatters` option)

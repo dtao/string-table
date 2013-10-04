@@ -15,10 +15,12 @@
         capitalizeHeaders = options.capitalizeHeaders || false,
         formatters        = options.formatters || {},
         typeFormatters    = options.typeFormatters || {},
-        rows              = [createHeaderRow(headers, capitalizeHeaders)];
+        rows              = [createHeaderRow(headers, capitalizeHeaders)],
+        formats           = [];
 
     for (var i = 0; i < records.length; ++i) {
-      rows.push(createRow(records[i], headers, formatters, typeFormatters));
+      // Yes, this is getting completely out of hand.
+      appendRowAndFormat(records[i], headers, formatters, typeFormatters, rows, formats);
     }
 
     var totalWidth =
@@ -47,7 +49,7 @@
 
     var formattedLines = [];
     for (var i = 0; i < rows.length; ++i) {
-      (function(row) {
+      (function(row, cellFormats) {
         // Determine the height of each row
         var rowHeight = getMaxHeight(row),
             currentLine;
@@ -64,10 +66,10 @@
           currentLine = [];
 
           for (var j = 0; j < row.length; ++j) {
-            (function(cell, width, type) {
+            (function(cell, width, type, format) {
               var lines = cellLines[j];
-              currentLine.push(formatCell(lines[line] || '', width, type));
-            }(row[j], columnWidths[j], columnTypes[j]));
+              currentLine.push(formatCell(lines[line] || '', width, type, format));
+            }(row[j], columnWidths[j], columnTypes[j], i > 0 && cellFormats[j]));
           }
 
           formattedLines.push(outerBorder + ' ' + currentLine.join(' ' + innerBorder + ' ') + ' ' + outerBorder);
@@ -81,14 +83,16 @@
         if (i === 0) {
           formattedLines.push(createRowSeparator(totalWidth, headerSeparator));
         }
-      }(rows[i]));
+      }(rows[i], formats[i - 1]));
     }
 
     return formattedLines.join('\n');
   }
 
-  function createRow(data, headers, formatters, typeFormatters) {
-    var row = [];
+  function appendRowAndFormat(data, headers, formatters, typeFormatters, rows, formats) {
+    var row         = [],
+        cellFormats = [];
+
     for (var i = 0; i < headers.length; ++i) {
       (function(header, columnIndex) {
         var value = data[header];
@@ -97,11 +101,26 @@
           typeFormatters[typeof value] ||
           identity;
 
-        row.push(formatter(value));
+        var formatted = formatter(value);
+        if (typeof formatted === 'object') {
+          value = formatted.value;
+          if (formatted.format && formatted.format.color) {
+            value = value[formatted.format.color];
+          }
+          cellFormats.push(formatted.format);
+
+        } else {
+          value = formatted;
+          cellFormats.push(null);
+        }
+
+        row.push(value);
 
       }(headers[i], i));
     }
-    return row;
+
+    rows.push(row);
+    formats.push(cellFormats);
   }
 
   function createHeaderRow(headers, capitalizeHeaders) {
@@ -150,14 +169,20 @@
     return value.charAt(0).toUpperCase() + value.substring(1);
   }
 
-  function formatCell(value, width, type) {
+  function formatCell(value, width, type, format) {
     var padding = width - strLength(value);
 
-    if (type === 'string') {
-      return padLeft(value, padding);
-    }
+    var alignment = (format && format.alignment) ||
+      (type === 'string' ? 'left' : 'right');
 
-    return padRight(value, padding);
+    switch (alignment) {
+      case 'right':
+        return padRight(value, padding);
+
+      case 'left':
+      default:
+        return padLeft(value, padding);
+    }
   }
 
   function strLength(value) {
