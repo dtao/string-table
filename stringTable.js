@@ -101,7 +101,7 @@
           typeFormatters[typeof value] ||
           identity;
 
-        var formatted = formatter(value);
+        var formatted = formatter(value, header);
         if (typeof formatted === 'object') {
           value = formatted.value;
           if (formatted.format && formatted.format.color) {

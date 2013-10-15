@@ -325,6 +325,28 @@ describe 'stringTable', ->
           """
         )
 
+      it 'passes both value and column header to custom type formatters', ->
+        people = [
+          { firstName: 'Dan', lastName: 'Tao', middleInitial: 'L' },
+          { firstName: 'Joe', lastName: 'Schmoe', middleInitial: 'K' },
+          { firstName: 'Johnny', lastName: 'Public', middleInitial: 'Q' }
+        ]
+
+        options =
+          typeFormatters:
+            string: (value, heading) ->
+              if heading.match(/Name$/) then value.toUpperCase() else value.toLowerCase()
+
+        expect(stringTable.create(people, options)).toMatchTable(
+          """
+          | firstName | lastName | middleInitial |
+          ----------------------------------------
+          | DAN       | TAO      | l             |
+          | JOE       | SCHMOE   | k             |
+          | JOHNNY    | PUBLIC   | q             |
+          """
+        )
+
       it 'gives precedence to a column-specific formatter before a type formatter', ->
         options =
           formatters:

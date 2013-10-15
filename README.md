@@ -134,7 +134,7 @@ stringTable.create(users, { capitalizeHeaders: true });
 
 ### `formatters`
 
-An object mapping column names to formatter functions
+An object mapping column names to formatter functions, which will accept `(value, header)` arguments
 
 *Default: none*
 
@@ -143,7 +143,7 @@ An object mapping column names to formatter functions
 ```javascript
 stringTable.create(users, {
   formatters: {
-    name: function(value) { return value.toUpperCase(); }
+    name: function(value, header) { return value.toUpperCase(); }
   }
 });
 
@@ -163,7 +163,7 @@ A formatter may also return an object with the properties `{ value, format }`, w
 ```javascript
 stringTable.create(users, {
   formatters: {
-    gender: function(value) {
+    gender: function(value, header) {
       return {
         value: value,
         format: {
@@ -199,7 +199,7 @@ An object mapping data *types* (`'string'`, `'number'`, `'boolean'`, etc.) to fo
 ```javascript
 stringTable.create(users, {
   typeFormatters: {
-    number: function(value) { return value.toFixed(2); }
+    number: function(value, header) { return value.toFixed(2); }
   }
 });
 
@@ -243,7 +243,7 @@ stringTable.create(users, {
 
 The character used to separate rows in the table
 
-*Default: `undefined`*
+*Default: none*
 
 #### Example
 
