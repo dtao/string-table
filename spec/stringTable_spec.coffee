@@ -363,6 +363,24 @@ describe 'stringTable', ->
           """
         )
 
+      it 'by default, outputs the strings "null" and "undefined" for null an undefined', ->
+        objects[0].a = null
+        objects[0].b = undefined
+
+        options =
+          formatters:
+            a: (value) -> value
+            b: (value) -> value
+
+        expect(stringTable.create(objects, options)).toMatchTable(
+          """
+          | a    | b         | c   |
+          --------------------------
+          | null | undefined | cow |
+          | arc  | bra       | cap |
+          """
+        )
+
       it 'can adjust column widths for colored output', ->
         require('colors')
 

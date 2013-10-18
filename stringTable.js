@@ -102,7 +102,7 @@
           identity;
 
         var formatted = formatter(value, header);
-        if (typeof formatted === 'object') {
+        if (formatted && typeof formatted === 'object') {
           value = formatted.value;
           if (formatted.format && formatted.format.color) {
             value = value[formatted.format.color];
@@ -173,7 +173,7 @@
     var padding = width - strLength(value);
 
     var alignment = (format && format.alignment) ||
-      (type === 'string' ? 'left' : 'right');
+      (type === 'number' ? 'right' : 'left');
 
     switch (alignment) {
       case 'right':
