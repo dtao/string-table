@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dtao/stringTable.js.git"
+    "url": "git://github.com/dtao/string-table.git"
   },
   "author": "Dan Tao",
   "license": "MIT",
   "readmeFilename": "README.md",
   "bugs": {
-    "url": "https://github.com/dtao/stringTable.js/issues"
+    "url": "https://github.com/dtao/string-table/issues"
   },
   "dependencies": {
     "colors": ">= 0.6.2"

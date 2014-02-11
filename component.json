@@ -1,6 +1,6 @@
 {
-  "name": "stringTable.js",
-  "repo": "dtao/stringTable.js",
+  "name": "string-table",
+  "repo": "dtao/string-table",
   "description": "Format an array of data objects as a textual table",
   "version": "0.1.5",
   "keywords": [],
