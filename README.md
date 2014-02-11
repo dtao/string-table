@@ -1,5 +1,5 @@
-stringTable.js
-==============
+string-table
+============
 
 [![Build Status](https://travis-ci.org/dtao/stringTable.js.png)](https://travis-ci.org/dtao/stringTable.js)
 
@@ -14,6 +14,8 @@ Example
 -------
 
 ```javascript
+var stringTable = require('string-table');
+
 var users = [
   { name: 'Dan', gender: 'M', age: 29 },
   { name: 'Adam', gender: 'M', age: 31 },
